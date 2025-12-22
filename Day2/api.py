@@ -3,6 +3,7 @@ from schemas import BookSchema
 from flask.views import MethodView
 from flask import Flask, request, jsonify
 
+# 블루프린트 생성 books라는 이름으로 url 정보는 /books
 blp = Blueprint('books', 'books', url_prefix='/books', description='Operations on books')
 
 # 데이터 저장소
@@ -17,8 +18,7 @@ def next_id():
 
 # 엔드포인트 구현...
 @blp.route("/")
-class Book_list(MethodView):
-    #
+class Book_list(MethodView):    
     @blp.response(200)
     def get(self):
         return books
@@ -34,11 +34,12 @@ class Book_list(MethodView):
         books.append(new_data)
         return new_data
     
-    
+
 @blp.route("/<int:book_id>")
 class Book(MethodView):
     @blp.response(200)
     def get(self, book_id):
+        # 조건을 만족하는 첫번째 값을 가져오는 제너레이터 컴프리헨션
         book = next((book for book in books if book["id"] == book_id), None)
         if book is None:
             abort(404, message = "Book not found")
