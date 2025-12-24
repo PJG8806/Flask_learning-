@@ -1,0 +1,4 @@
+myslq_host: 'localhost'
+myslq_user: 'flaskuser'
+mysql_password: 'flaskpass'
+mysql_db: 'oz'
